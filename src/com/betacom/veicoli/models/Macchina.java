@@ -18,10 +18,19 @@ public class Macchina extends Veicoli{
 	public void setCc(Integer cc) {
 		this.cc = cc;
 	}
-	public Integer getNumeroPoorte() {
+	public Integer getNumeroPorte() {
 		return numeroPorte;
 	}
-	public void setNumeroPoorte(Integer numeroPorte) {
+	public void setNumeroPorte(Integer numeroPorte) {
 		this.numeroPorte = numeroPorte;
+	}
+	
+	@Override
+	public String toString() {
+		return "Macchina [ Id=" + getId() + ", TipoVeicolo=" + getTipoVeicolo()
+				+ ", NumeroRuote=" + getNumeroRuote() + ", TipoAlimentazione=" + getTipoAlimentazione()
+				+ ", Categoria=" + getCategoria() + ", Colore=" + getColore() + ", Marca=" + getMarca()
+				+ ", AnnoProduzione=" + getAnnoProduzione() + ", Modello=" + getModello() 
+				+ ", targa=" + targa + ", cc=" + cc  + "]";
 	}
 }
