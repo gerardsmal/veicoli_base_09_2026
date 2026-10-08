@@ -4,12 +4,16 @@ import java.util.Map;
 
 import com.betacom.veicoli.models.Moto;
 import com.betacom.veicoli.singleton.ListManager;
+import com.betacom.veicoli.utilities.CommonUtils;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class MotoImpl extends VeicoloAbstract{
 
 	@Override
 	public void add(String ope, String params) throws Exception {
-		Map<String, String> p = decodeParamers(params);
+		Map<String, String> p = CommonUtils.decodeParamers(params);
 		
 		Moto moto = new Moto();
 		moto.setTipoVeicolo("moto");
@@ -20,14 +24,12 @@ public class MotoImpl extends VeicoloAbstract{
 			throw new Exception("Targa già inserita");
 		moto.setTarga(p.get("targa").toUpperCase());
 		
-		try {
-			moto.setCc(Integer.parseInt(p.get("cc")));			
-		} catch (Exception e) {
-			throw new Exception("cilindrato invalido");
-		}
+		if (!CommonUtils.isNumeric(p.get("cc")))
+			throw new Exception("cilindrato invalido");	
+		moto.setCc(Integer.parseInt(p.get("cc")));			
 		
 		moto = (Moto) ListManager.getInstance().insertVeicolo(moto);
-		System.out.println("Moto inserita");
+		log.info("Moto inserita");
 		
 	}
 

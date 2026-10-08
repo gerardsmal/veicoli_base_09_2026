@@ -1,11 +1,13 @@
 package com.betacom.veicoli.singleton;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.betacom.veicoli.models.Veicoli;
+import com.betacom.veicoli.utilities.CommonUtils;
 
 public class ListManager {
 	private static ListManager instance = null;
@@ -28,13 +30,7 @@ public class ListManager {
 	}
 	
 	public void loadConstant() {
-		List<String> cons = List.of(
-			"alim=benzina,diesel,electica,ibrida,manuale",
-			"cat=strada,fuoristrada,suv,mtb,cross",
-			"colore=bianco,nero,verde,giallo,marrone,rosso",
-			"marca=Fiat,Renault,BMW,Telsla,Bianchi,Yamaha,Mercedes,Tecnizer",
-			"sospenzione=senza,mono,bi"
-		);
+		List<String> cons = CommonUtils.readFile("src/attributes.txt");
 		for (String it:cons) {
 			String[] el = it.split("=");
 			controlli.put(el[0], el[1].split(","));
@@ -43,20 +39,21 @@ public class ListManager {
 	
 	public boolean isValidValue(String key, String value) {
 	    String[] values = controlli.get(key);
-	    for (String it:values) {
-	    	if (value.equalsIgnoreCase(it))
-	    		return true;
-	    }
-	    return false;
+	    return Arrays.stream(values)                 // control se contiene il value passato come parametro
+	            .anyMatch(it -> value.equalsIgnoreCase(it));
 	}
 	
+//	public boolean isTargaExist(String targa) {
+//		if (lTarge.containsKey(targa))
+//			return true;
+//		
+//		lTarge.put(targa.toUpperCase(), "");
+//		return false;	
+//		
+//	}
+	
 	public boolean isTargaExist(String targa) {
-		if (lTarge.containsKey(targa))
-			return true;
-		
-		lTarge.put(targa.toUpperCase(), "");
-		return false;	
-		
+	    return lTarge.putIfAbsent(targa.toUpperCase(), "") != null;  // return null se non esiste valore della targa se esiste
 	}
 	
 	public Veicoli insertVeicolo(Veicoli v) {

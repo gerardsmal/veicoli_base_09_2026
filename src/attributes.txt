@@ -1,0 +1,5 @@
+alim=benzina,diesel,electica,ibrida,manuale
+cat=strada,fuoristrada,suv,mtb,cross
+colore=bianco,nero,verde,giallo,marrone,rosso
+marca=Fiat,Renault,BMW,Telsla,Bianchi,Yamaha,Mercedes,Tecnizer
+sospenzione=senza,mono,bi

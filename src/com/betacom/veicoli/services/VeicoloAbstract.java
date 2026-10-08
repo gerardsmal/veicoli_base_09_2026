@@ -6,28 +6,22 @@ import java.util.Map;
 
 import com.betacom.veicoli.models.Veicoli;
 import com.betacom.veicoli.singleton.ListManager;
+import com.betacom.veicoli.utilities.CommonUtils;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public abstract class VeicoloAbstract {
 	
 	public abstract void add(String ope, String params) throws Exception;	
 	
-	public Map<String, String> decodeParamers(String para){
-		String[] p = para.split(",");
-		Map<String, String> map = new HashMap<String, String>();
-		for (String it:p) {
-			String[] elem = it.split("=");
-			map.put(elem[0],elem[1]);
-		}
-		return map;
-	}
 	
 	public Veicoli  controlExecute(Veicoli vei,  Map<String, String> params) throws Exception {
 		
-		try {
-			vei.setNumeroRuote(Integer.parseInt(params.get("ruote")));			
-		} catch (Exception e) {
+		if (!CommonUtils.isNumeric(params.get("ruote")))
 			throw new Exception("numero route invalido");
-		}
+		vei.setNumeroRuote(Integer.parseInt(params.get("ruote")));			
+
 		if (!ListManager.getInstance().isValidValue("alim", params.get("alim")))
 			throw new Exception("Tipo alimentazione invalida");
 		vei.setTipoAlimentazione(params.get("alim"));
@@ -43,22 +37,30 @@ public abstract class VeicoloAbstract {
 
 
 		if (!ListManager.getInstance().isValidValue("marca", params.get("marca")))
-			throw new Exception("Marca invalida");
+			throw new Exception("Marca invalida :" + params.get("marca"));
 		vei.setMarca(params.get("marca"));
 		
 		
-		try {
-			vei.setAnnoProduzione(Integer.parseInt(params.get("anno")));			
-		} catch (NumberFormatException e) {
-			throw new Exception("Anno produzione invalida");
-		}
+		if (!CommonUtils.isNumeric(params.get("anno")))
+			throw new Exception("Anno produzione invalida :" + params.get("anno"));
+		vei.setAnnoProduzione(Integer.parseInt(params.get("anno")));			
 
 		if (vei.getAnnoProduzione() < LocalDate.now().getYear() - 20 || vei.getAnnoProduzione() > LocalDate.now().getYear())
-			throw new Exception("Anno produzione invalida");
+			throw new Exception("Anno produzione troppo vecchia");
 		
 		vei.setModello(params.get("modello"));
 		
 		
 		return vei;
+	}
+	
+	public void delete(String ope, String params) throws Exception {
+		Map<String, String> p = CommonUtils.decodeParamers(params);
+		log.info("deleteVeicolo: {}" , p);
+		if (p.get("id") == null) {
+			throw new Exception("id mancante per remove");
+		}
+		ListManager.getInstance().remove(Integer.parseInt(p.get("id")));
+		log.info("Veicolo cancellata");
 	}
 }
