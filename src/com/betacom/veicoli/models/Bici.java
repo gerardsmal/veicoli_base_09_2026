@@ -18,7 +18,7 @@ public class Bici extends Veicoli{
 	public String toString() {
 		return "Bici [Id=" + getId() + ", TipoVeicolo=" + getTipoVeicolo() + ", NumeroRuote="
 				+ getNumeroRuote() + ", TipoAlimentazione=" + getTipoAlimentazione() + ", Categoria="
-				+ getCategoria() + ", getColore()=" + getColore() + ", getMarca()=" + getMarca()
+				+ getCategoria() + ", colore=" + getColore() + ", Marca()=" + getMarca()
 				+ ", AnnoProduzione=" + getAnnoProduzione() + ", Modello=" + getModello() 
 				+ ", numeroMarche=" + numeroMarce + ", tipoSospenzione=" + tipoSospenzione + ", piegevole="
 				+ piegevole +"]";

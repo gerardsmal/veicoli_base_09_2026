@@ -1,0 +1,3 @@
+import;
+add;moto;ruote=2,alim=benzina,cat=strada,colore=verde,marca=Yamaha,anno=2026,modello=r2,targa=FG33339,cc=1000
+list;type=all

@@ -11,9 +11,11 @@ import lombok.extern.slf4j.Slf4j;
 public class MainVeicoli {
 
 	public static String PATH_OUPUT= "/Users/gerard/Downloads/result_veicoli.txt";
+	public static String PATH_EXPORT= "/Users/gerard/Downloads/list_veicoli.json";
+	public static String PATH_IMPORT= "/Users/gerard/Downloads/list_veicoli.json";
 	
 	public static void main(String[] args) {
-		List<String> param = CommonUtils.readFile("src/input_parameters.txt");
+		List<String> param = CommonUtils.readFile("src/input_parameters_import.txt");
 		log.info(" start veicoli base *****");
 		new StartVeicolo().execute(param);
 	}

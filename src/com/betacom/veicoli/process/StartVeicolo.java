@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.betacom.veicoli.MainVeicoli;
 import com.betacom.veicoli.services.BiciImpl;
+import com.betacom.veicoli.services.JsonImpl;
 import com.betacom.veicoli.services.ListImpl;
 import com.betacom.veicoli.services.MacchinaImpl;
 import com.betacom.veicoli.services.MotoImpl;
@@ -27,6 +28,7 @@ public class StartVeicolo {
 	private Map<String,VeicoloAbstract> cache = new HashMap<String, VeicoloAbstract>();  // cache per evitare multiple new instance
 	private final static String PATH_SERVICES = "com.betacom.veicoli.services";
 	private final static ListImpl listService = new ListImpl();
+	private final static JsonImpl jsonService = new JsonImpl(); 
 	
 	public void execute(List<String> param)  {
 		
@@ -46,6 +48,14 @@ public class StartVeicolo {
 		CommonUtils.writeFile(MainVeicoli.PATH_OUPUT, "End Veicoli ***", true);
 	}
 	private void executeCommand(String operation, String[] inp) throws Exception{
+		if ("export".equalsIgnoreCase(operation)) {
+			jsonService.exportService();
+			return;  // early return
+		}
+		if ("import".equalsIgnoreCase(operation)) {
+			jsonService.importService();
+			return;  // early return
+		}
 		if ("list".equalsIgnoreCase(operation)) {
 			if (inp.length != 2)
 				throw new Exception("parametro invalido per la list " + inp.length);

@@ -11,3 +11,4 @@ add;macchina;ruote=4,alim=benzina,cat=strada,colore=bianco,marca=fiat,anno=2026,
 delete;moto;id=4
 list;type=all
 list;type=filter,tipoVeicolo=macchina,modello=panda
+export;

@@ -63,6 +63,15 @@ public class ListManager {
 		
 	}
 
+	public void insertAllVeicoli(List<Veicoli> veicoli) {
+		listV.addAll(veicoli);
+		id = listV.stream()
+		        .mapToInt(Veicoli::getId)
+		        .max()
+		        .orElse(0);
+		
+	}
+	
 	public void remove(Integer id) {
 	    listV.removeIf(it -> it.getId() == id);
 
